@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2010 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Ernest Delgado (ernestd@google.com)
+                 Alex Russell (slightlyoff@chromium.org)
+
+  html5-slides-markdown Modifications: Adam Zapletal (adamzap@gmail.com)
+-->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>HTML</title>
+    <style type="text/css" media="print">
+      * {
+          margin: 0;
+          padding: 0;
+      }
+      @page {
+          size: landscape;
+      }
+      body {
+          font: 100% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+          padding: 0;
+          margin: 0;
+      }
+      div.slide {
+          min-width: 800px;
+          min-height: 600px;
+          padding: 1em;
+          overflow: hidden;
+          page-break-after: always;
+          border: 1px solid black;
+          border-radius: 20px;
+      }
+      div.slide div.inner {
+          width: 800px;
+          height: 600px;
+          margin: auto;
+          display: table-cell;
+      }
+      h1 {
+          font-size: 2.4em;
+      }
+      h2 {
+          font-size: 1.4em;
+      }
+      h3 {
+          margin: 1em 0;
+      }
+      ul {
+          margin: 0;
+          padding: 0;
+      }
+      p, li, pre {
+          margin: 1em 0;
+      }
+      li {
+          margin-left: 2em;
+      }
+      a {
+          color: #000000;
+      }
+      pre, code {
+          max-width: 800px;
+          background: #eee;
+          font-family: Monaco, monospace;
+          font-size: 90%;
+      }
+      pre {
+          padding: .5em;
+          overflow: hidden;
+          border-radius: .8em;
+      }
+      code {
+          padding: 0 .2em;
+      }
+      .slide header:only-child h1 {
+        line-height: 180%;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+        height: 600px;
+        width: 800px;
+        font-size: 48px;
+        margin-top:100px;
+        margin-bottom:100px;
+      }
+    </style>
+    <style type="text/css" media="screen, projection">
+        body {
+          font: 14px "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+          background: #778;
+          padding: 0;
+          margin: 0;
+          overflow: hidden;
+        }
+
+        div.presentation {
+          position: absolute;
+          width: 100%;
+          display: table-cell;
+          vertical-align: middle;
+          height: 100%;
+          background: inherit;
+        }
+
+        div.slides {
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          left: 0;
+          top: 0;
+          position: absolute;
+          display: block;
+          -webkit-transition: -webkit-transform 1s ease-in-out;
+          -moz-transition: -moz-transform 1s ease-in-out;
+          -o-transition: -o-transform 1s ease-in-out;
+        }
+
+        div.slide {
+          display: none;
+          position: absolute;
+          overflow: hidden;
+          width: 900px;
+          height: 700px;
+          left: 50%;
+          top: 50%;
+          margin-top: -350px;
+          background: -webkit-gradient(linear, left bottom, left top, from(#bbd), to(#fff));
+          -webkit-transition: margin 0.25s ease-in-out;
+          background-color: #eee;
+          background: -moz-linear-gradient(bottom, #bbd, #fff);
+          -moz-transition: margin 0.25s ease-in-out;
+          -o-transition: margin 0.25s ease-in-out;
+          border-top-left-radius: 20px;
+          -moz-border-radius-topleft: 20px;
+          -webkit-border-top-left-radius: 20px;
+          border-top-right-radius: 20px;
+          -moz-border-radius-topright: 20px;
+          -webkit-border-top-right-radius: 20px;
+          border-bottom-right-radius: 20px;
+          -moz-border-radius-bottomright: 20px;
+          -webkit-border-bottom-right-radius: 20px;
+          border-bottom-left-radius: 20px;
+          -moz-border-radius-bottomleft: 20px;
+          -webkit-border-bottom-left-radius: 20px;
+        }
+
+        div.slide p {
+          font-size: 20px;
+        }
+
+        .slide.far-past {
+          display: block;
+          margin-left: -2400px;
+        }
+
+        .slide.past {
+          display: block;
+          margin-left: -1400px;
+        }
+
+        .slide.current {
+          display: block;
+          margin-left: -450px;
+        }
+
+        .slide.future {
+          display: block;
+          margin-left: 500px;
+        }
+
+        .slide.far-future {
+          display: block;
+          margin-left: 1500px;
+        }
+
+        body.three-d div.slides {
+          -webkit-transform: translateX(50px) scale(0.8) rotateY(10deg);
+          -moz-transform: translateX(50px) scale(0.8) rotateY(10deg);
+          -o-transform: translateX(50px) scale(0.8) rotateY(10deg);
+        }
+
+
+        /* Content */
+
+        header:not(:only-child) {
+          font-family: 'Lucida Grande';
+          font-weight: normal;
+          font-size: 50px;
+          letter-spacing: -.05em;
+          color: white;
+          color: black;
+          text-shadow: rgba(0, 0, 0, 0.2) 0 2px 5px;
+          position: absolute;
+          left: 30px;
+          top: 25px;
+          margin: 0;
+          padding: 0;
+        }
+
+        h1 {
+          display: inline;
+          font-size: 100%;
+          font-weight: normal;
+          padding: 0;
+          margin: 0;
+        }
+
+        h2 {
+          font-family: 'Lucida Grande';
+          color: black;
+          font-size: 2em;
+          margin-left: 20px;
+          margin-top: 50px;
+        }
+
+        h2:first-child {
+          margin-top: 0;
+        }
+
+        section, .slide header:only-child h1 {
+          font-family: 'Lucida Grande';
+          color: #3f3f3f;
+          text-shadow: rgba(0, 0, 0, 0.2) 0 2px 5px;
+          margin-left: 30px;
+          margin-right: 30px;
+          margin-top: 100px;
+          display: block;
+          overflow: hidden;
+        }
+
+        a {
+          color: inherit;
+          display: inline-block;
+          text-decoration: none;
+          line-height: 110%;
+          border-bottom: 2px solid #3f3f3f;
+        }
+
+        h2 {
+          padding: 0;
+          margin: 15px 0 5px 0;
+        }
+
+        pre {
+          font-size: 16px;
+          font-family: Monaco, Courier, monospace;
+        }
+
+        li {
+          padding: 10px 0;
+          font-size: 20px;
+        }
+
+        .slide header:only-child h1 {
+          line-height: 180%;
+          text-align: center;
+          display: table-cell;
+          vertical-align: middle;
+          height: 700px;
+          width: 900px;
+          font-size: 50px;
+          margin-top:100px;
+          margin-bottom:100px;
+        }
+    </style>
+    <script>
+        function main() {
+          // Since we don't have the fallback of attachEvent and
+          // other IE only stuff we won't try to run JS for IE.
+          // It will run though when using Google Chrome Frame
+          if (document.all) { return; }
+
+          var currentSlideNo;
+          var notesOn = false;
+          var slides = document.getElementsByClassName('slide');
+          var touchStartX = 0;
+
+          // var slide_hash = window.location.hash.replace(/#/, '');
+          // if (slide_hash) {
+          //   for (var i = 0, len = slides.length; i < len; i++) {
+          //     if (slides[i].id == slide_hash) {
+          //       currentSlideNo = i;
+          //       updateSlideClasses();
+          //     }
+          //   }
+          // }
+
+          var spaces = /\s+/, a1 = [""];
+
+          var str2array = function(s) {
+            if (typeof s == "string" || s instanceof String) {
+              if (s.indexOf(" ") < 0) {
+                a1[0] = s;
+                return a1;
+              } else {
+                return s.split(spaces);
+              }
+            }
+            return s;
+          };
+
+          var trim = function(str) {
+            return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+          };
+
+          var addClass = function(node, classStr) {
+            classStr = str2array(classStr);
+            var cls = " " + node.className + " ";
+            for (var i = 0, len = classStr.length, c; i < len; ++i) {
+              c = classStr[i];
+              if (c && cls.indexOf(" " + c + " ") < 0) {
+                cls += c + " ";
+              }
+            }
+            node.className = trim(cls);
+          };
+
+          var removeClass = function(node, classStr) {
+            var cls;
+            if (classStr !== undefined) {
+              classStr = str2array(classStr);
+              cls = " " + node.className + " ";
+              for (var i = 0, len = classStr.length; i < len; ++i) {
+                cls = cls.replace(" " + classStr[i] + " ", " ");
+              }
+              cls = trim(cls);
+            } else {
+              cls = "";
+            }
+            if (node.className != cls) {
+              node.className = cls;
+            }
+          };
+
+          var getSlideEl = function(slideNo) {
+            if (slideNo > 0) {
+              return slides[slideNo - 1];
+            } else {
+              return null;
+            }
+          };
+
+          var getSlideTitle = function(slideNo) {
+            var el = getSlideEl(slideNo);
+
+            if (el) {
+              return el.getElementsByTagName('header')[0].innerHTML;
+            } else {
+              return null;
+            }
+          };
+
+          var changeSlideElClass = function(slideNo, className) {
+            var el = getSlideEl(slideNo);
+
+            if (el) {
+              removeClass(el, 'far-past past current future far-future');
+              addClass(el, className);
+            }
+          };
+
+          var updateSlideClasses = function() {
+            window.location.hash = "slide" + currentSlideNo;
+            changeSlideElClass(currentSlideNo - 2, 'far-past');
+            changeSlideElClass(currentSlideNo - 1, 'past');
+            changeSlideElClass(currentSlideNo, 'current');
+            changeSlideElClass(currentSlideNo + 1, 'future');
+            changeSlideElClass(currentSlideNo + 2, 'far-future');
+          };
+
+          var nextSlide = function() {
+            if (currentSlideNo < slides.length) {
+              currentSlideNo++;
+            }
+
+            updateSlideClasses();
+          };
+
+          var prevSlide = function() {
+            if (currentSlideNo > 1) {
+              currentSlideNo--;
+            }
+            updateSlideClasses();
+          };
+
+          var showNotes = function() {
+            var notes = document.querySelectorAll('.notes');
+            for (var i = 0, len = notes.length; i < len; i++) {
+              notes[i].style.display = (notesOn) ? 'none':'block';
+            }
+            notesOn = (notesOn) ? false:true;
+          };
+
+          var switch3D = function() {
+            if (document.body.className.indexOf('three-d') == -1) {
+              document.getElementsByClassName('presentation')[0].style.webkitPerspective = '1000px';
+              document.body.className += ' three-d';
+            } else {
+              window.setTimeout("document.getElementsByClassName('presentation')[0].style.webkitPerspective = '0';", 2000);
+              document.body.className = document.body.className.replace(/three-d/, '');
+            }
+          };
+
+          var handleBodyKeyDown = function(event) {
+            // console.log(event.keyCode);
+            switch (event.keyCode) {
+              case 37: // left arrow
+                prevSlide();
+                break;
+              case 39: // right arrow
+              // case 32: // space
+                nextSlide();
+                break;
+              case 50: // 2
+                showNotes();
+                break;
+              case 51: // 3
+                switch3D();
+                break;
+            }
+          };
+
+          var addTouchListeners = function() {
+            document.addEventListener('touchstart', function(e) {
+              touchStartX = e.touches[0].pageX;
+            }, false);
+            document.addEventListener('touchend', function(e) {
+              var pixelsMoved = touchStartX - e.changedTouches[0].pageX;
+              var SWIPE_SIZE = 150;
+              if (pixelsMoved > SWIPE_SIZE) {
+                nextSlide();
+              }
+              else if (pixelsMoved < -SWIPE_SIZE) {
+               prevSlide();
+              }
+            }, false);
+          };
+
+          // initialize
+
+          (function() {
+            if (window.location.hash != "") {
+              currentSlideNo = Number(window.location.hash.replace('#slide', ''));
+            } else {
+              currentSlideNo = 1;
+            }
+
+            document.addEventListener('keydown', handleBodyKeyDown, false);
+
+            var els = slides;
+            for (var i = 0, el; el = els[i]; i++) {
+              addClass(el, 'slide far-future');
+            }
+            updateSlideClasses();
+
+            // add support for finger events (filter it by property detection?)
+            addTouchListeners();
+          })();
+        };
+    </script>
+</head>
+<body>
+    <div class="presentation">
+      <div class="slides">
+        
+          <div class="slide">
+              <div class="inner">
+                  
+                  <header><h1>HTML</h1></header>
+                  
+                  
+              </div>
+          </div>
+        
+          <div class="slide">
+              <div class="inner">
+                  
+                  <header><h1>Introdução</h1></header>
+                  
+                  
+                      <section><ul>
+<li>É a próxima versão do HTML</li>
+<li>Simplifica o desenvolvimento das aplicações WEB</li>
+<li>Introduz melhoramentos na especificação do HTML 4.01</li>
+<li>Oferece vantagens aos utilizadores</li>
+</ul></section>
+                  
+              </div>
+          </div>
+        
+          <div class="slide">
+              <div class="inner">
+                  
+                  <header><h1>Novo Elementos[1/2]</h1></header>
+                  
+                  
+                      <section><p><img alt="imagem1" src="iamgem1.png" /></p>
+<p>Hmmmm... já vi isto em algum lado!?</p></section>
+                  
+              </div>
+          </div>
+        
+          <div class="slide">
+              <div class="inner">
+                  
+                  <header><h1>Novo Elementos[2/2]</h1></header>
+                  
+                  
+                      <section><p><img alt="imagem2" src="imagem2.png" /></p></section>
+                  
+              </div>
+          </div>
+        
+          <div class="slide">
+              <div class="inner">
+                  
+                  <header><h1>Forms</h1></header>
+                  
+                  
+                      <section><p><table>
+<tr>
+    <td><code>&lt;input type="text" <mark>required</mark>  /&gt;</code></td>
+    <td><form><input type="text" required /><input type="submit" value="Submit" /></form></td>
+</tr>
+<tr>
+    <td><code>&lt;input type="<mark>email</mark>" <mark>placeholder="E-mail..."</mark>  /&gt;</code></td>
+    <td><form><input type="email" placeholder="E-mail..." /><input type="submit" value="Submit" /></form></td>
+</tr>
+<tr>
+    <td><code>&lt;input type="<mark>number</mark>" min="-5" max="10" /&gt;</code></td>
+    <td><form><input type="number" min="-5" max="10" /><input type="submit" value="Submit" /></form></td>
+</tr>
+<tr>
+    <td><code>&lt;input type="<mark>date</mark>"  /&gt;</code></td>
+    <td><form><input type="date" value="2010-08-14" /><input type="submit" value="Submit" /></form></td>
+</tr>
+<tr>
+    <td><code>&lt;input type="<mark>range</mark>" min="0" max="50"  /&gt;</code></td>
+    <td><form><input type="range" min="0" max="50" onchange="document.getElementById('rangeValue').innerHTML = this.value;" /> <span id="rangeValue"></span></form></td>
+</tr>
+<tr>
+    <td><code>&lt;input type="<mark>tel</mark>"  <mark>pattern="regex..."</mark> /&gt;</code></td>
+    <td><form><input type="tel"  placeholder="(555) 555-5555" pattern="^klzzwxh:0002?klzzwxh:0003{3}klzzwxh:0004?[-klzzwxh:0005]klzzwxh:0006{3}[-klzzwxh:0007]klzzwxh:0008{4}.*?$" /><input type="submit" value="Submit" /></form></td>
+</tr>
+<tr>
+    <td style="padding-top: 30px;"><code>&lt;progress&gt;working...&lt;/progress&gt;</code></td>
+    <td style="padding-top: 30px;"><progress>working...</progress></td>
+</tr>
+<tr>
+    <td><code>&lt;input type="text" <mark>x-webkit-speech</mark> /&gt;</code></td>
+    <td><input type="text" x-webkit-speech /></td>
+</tr>
+</table></p></section>
+                  
+              </div>
+          </div>
+        
+          <div class="slide">
+              <div class="inner">
+                  
+                  <header><h1>Áudio e Vídeo</h1></header>
+                  
+                  
+                      <section><p><table cellpadding="10">
+    <tr>
+        <td>
+            <code>
+                &lt;video id="clip" src="video.mp4" controls <br /> 
+                &nbsp;&nbsp;&nbsp;<mark>poster=“poster.jpg"</mark> width="320" height="200"&gt;<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;a href=" video.mp4 "&gt;Download Movie&lt;/a&gt;<br />
+                &lt;/video&gt;<br />
+            </code>
+        </td>
+        <td style="vertical-align:top;">
+            <code>
+                &lt;audio src="song.mp3" controls&gt;<br />
+                   &nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="song.mp3"&gt;Download Song&lt;/a&gt;<br />
+                &lt;audio&gt;
+            </code>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <video id="clip" src="video.mp4" controls poster="poster.jpg" width="300" height="200">
+                <a href=" video.mp4 ">Download Movie</a>
+            </video>
+        </td>
+        <td>
+            <audio src="song.mp3" controls style="margin-top: 167px;"> 
+               <a href="song.mp3">Download Song</a> 
+            </audio>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="padding-top: 100px;">
+            <input type="button" value="Pausa" onclick="videoClip.pause();"/>
+            <input type="button" value="Reproduzir" onclick="videoClip.play();"/>
+            <input type="button" value="Activar Reflexão" onclick="addReflection();" />
+        </td>
+    </tr>
+    <input type="file" accept="image/*" id="capture"> 
+</table></p>
+<!-- CódigoJS Vídeo !-->
+<script>
+var videoClip = document.getElementById('clip');
+function addReflection() {
+  videoClip.style.webkitBoxReflect = videoClip.style.webkitBoxReflect !== '' ? '' : "below 0px -webkit-gradient(linear, 0% 0%, 0% 100%, from(transparent), color-stop(0.55, transparent), to(white))";
+}
+</script></section>
+                  
+              </div>
+          </div>
+        
+          <div class="slide">
+              <div class="inner">
+                  
+                  <header><h1>O que há de novo no JavaScript?[1/2]</h1></header>
+                  
+                  
+                      <section><p><script>
+function saveContentOnLocalStorage(){
+    window.localStorage.setItem('value', area.value);
+}
+</script>
+Manutenção do estado do lado do cliente:</p>
+<pre><div class="highlight"><pre style="line-height: 125%"><span style="background-color: #f0f0f0; padding: 0 5px 0 5px">1</span> <span style="color: #008000">window</span>.localStorage.setItem(<span style="color: #BA2121">&#39;val&#39;</span>, txt.value);
+</pre></div>
+</pre>
+<p><table>
+    <tr>
+        <td>
+            <textarea id="text-area" placeholder="Escreva uma mensagem aqui..." style="width: 300px;"></textarea>
+        </td>
+        <td>
+            <input type="button" id="save-text-area-value-button" onclick="saveContentOnLocalStorage()" value="Gravar" />
+        </td>
+    </tr>
+</table></p>
+<script> 
+    var area = document.querySelector('#text-area');
+    if (!area.value) {
+        area.value = window.localStorage.getItem('value');
+    }
+</script>
+
+<p><br /><br />
+Gestão de uma base de dados com JS:</p>
+<pre><div class="highlight"><pre style="line-height: 125%"><span style="background-color: #f0f0f0; padding: 0 5px 0 5px">1</span> <span style="color: #008000; font-weight: bold">var</span> db <span style="color: #666666">=</span> <span style="color: #008000">window</span>.openDatabase(<span style="color: #BA2121">&quot;DBName&quot;</span>, <span style="color: #BA2121">&quot;1.0&quot;</span>, <span style="color: #BA2121">&quot;description&quot;</span>, <span style="color: #666666">5*1024*1024</span>); <span style="color: #408080; font-style: italic">//5MB</span>
+<span style="background-color: #f0f0f0; padding: 0 5px 0 5px">2</span> db.transaction(<span style="color: #008000; font-weight: bold">function</span>(tx) {
+<span style="background-color: #f0f0f0; padding: 0 5px 0 5px">3</span>     tx.executeSql(<span style="color: #BA2121">&quot;SELECT * FROM test&quot;</span>, successCallback, errorCallback);
+<span style="background-color: #f0f0f0; padding: 0 5px 0 5px">4</span> });
+</pre></div>
+</pre></section>
+                  
+              </div>
+          </div>
+        
+          <div class="slide">
+              <div class="inner">
+                  
+                  <header><h1>O que há de novo no JavaScript?[2/2]</h1></header>
+                  
+                  
+                      <section><p>Notificações:</p>
+<input type="button" id="request-permission" value="Autorizar a apresentação de notificações no Desktop" />
+
+<p>Nome do utilizador do tweeter: <input type="text" id="tweeter-user-name" /><input type="button" id="get-tweets" value="Obter Tweet" />
+<script defer> 
+  document.getElementById('request-permission').addEventListener('click', function() {
+    window.webkitNotifications.requestPermission();
+  }, false);
+  document.getElementById('get-tweets').addEventListener('click', function() {
+    readTweets();
+  }, false);
+  function readTweets() {
+    var username = document.getElementById('tweeter-user-name').value;
+    if (username == 'username') {
+      alert('Falta o user name!');
+      return;
+    }
+    var script = document.createElement("script");
+    script.src = 'http://twitter.com/statuses/user_timeline/'+ username+'.json?count=1&amp;callback=fetchTweets';</p>
+<pre><code>document.body.appendChild(script);
+</code></pre>
+<p>}
+  function fetchTweets(data) {
+    var tweet;
+    alert(data);
+    var i = data.length;
+    while (i--) {
+      tweet = data[i];
+      if (window.webkitNotifications.checkPermission() == 0) {
+        // note the show()
+        window.webkitNotifications.createNotification(tweet.user.profile_image_url, tweet.user.name, tweet.text).show();
+      } else {
+        // Note that we can't call requestPermission from here as we are in the callback function and not triggered just on user action
+        alert('You have to click on "Set notification permissions for this page" first to be able to receive notifications.');
+        return;
+      }
+    }
+  }
+</script></p></section>
+                  
+              </div>
+          </div>
+        
+          <div class="slide">
+              <div class="inner">
+                  
+                  
+                      <section><p>This is a slide with no heading. It works too.</p></section>
+                  
+              </div>
+          </div>
+        
+      </div>
+    </div>
+    <script>
+        main()
+    </script>
+</body>
+</html>
